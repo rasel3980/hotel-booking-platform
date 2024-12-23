@@ -5,9 +5,13 @@ import Footer from '../Components/Footer';
 
 const MainLayout = () => {
     return (
-        <div className='w-11/12 mx-auto'>
+        <div>
+            <div className='w-11/12 mx-auto'>
             <Header></Header>
+            <div className='min-h-[calc(100vh-361px)]'>
             <Outlet></Outlet>
+            </div>
+            </div>
             <Footer></Footer>
         </div>
     );
