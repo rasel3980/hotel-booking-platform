@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaUserAlt } from "react-icons/fa";
+import { FaUser, FaUserAlt } from "react-icons/fa";
+import { authContext } from '../AuthProvider/AuthProvider';
 
 const Header = () => {
+    const {handleLogout,user} = useContext(authContext);
     const Links = <>
     <li> <NavLink to="/">Home</NavLink> </li>
     <li> <NavLink to="/rooms">Rooms</NavLink> </li>
     <li> <NavLink to="/my-bookings">My Bookings</NavLink> </li>
     <li> <NavLink to="/login">Login</NavLink> </li>
     <li> <NavLink to="/register">Register</NavLink> </li>
-    </>
+        </>
     return (
         <div className="navbar bg-base-100">
   <div className="navbar-start">
@@ -48,7 +50,24 @@ const Header = () => {
     </ul>
   </div>
   <div className="navbar-end">
-  <FaUserAlt size={30} />
+  {user ? (
+            <div>
+              <NavLink>
+                <img
+                  className="w-10 rounded-full cursor-pointer"
+                  src={user?.photoURL}
+                  alt="userPhoto"
+                />
+              </NavLink>
+
+              
+            </div>
+          ) : (
+            <div className="mr-3">
+              <FaUser size={25} />
+            </div>
+          )}
+          <button onClick={handleLogout}>Logout</button>
   </div>
 </div>
     );

@@ -7,6 +7,7 @@ import Register from '../Pages/Register';
 import { createBrowserRouter } from 'react-router-dom';
 import Rooms from '../Pages/Rooms';
 import MyBookingsRoom from '../Pages/MyBookingsRoom';
+import PrivateRoute from '../Private/PrivateRoute';
 
   const Router = createBrowserRouter([
     {
@@ -32,7 +33,7 @@ import MyBookingsRoom from '../Pages/MyBookingsRoom';
         },
         {
             path:"/my-bookings",
-            element:<MyBookingsRoom></MyBookingsRoom>
+            element:<PrivateRoute><MyBookingsRoom></MyBookingsRoom></PrivateRoute>
         },
       ]
     },

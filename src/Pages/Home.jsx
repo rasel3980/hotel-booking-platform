@@ -5,7 +5,7 @@ const Home = () => {
     const {user}=useContext(authContext);
     return (
         <div className='w-11/12 mx-auto'>
-            name: {user.displayName}
+            name: {user?.displayName}
         </div>
     );
 };
