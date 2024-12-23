@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 import { auth } from '../Firebase/Firebase';
-import { GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
 export const authContext = createContext();
 
 
@@ -14,11 +14,15 @@ const AuthProvider = ({routes}) => {
     const handleSignIn=(Email,Password)=>{
         return signInWithEmailAndPassword(auth,Email,Password);
     }
+    const handleRegister = (Email,Password)=>{
+        return createUserWithEmailAndPassword(auth,Email,Password);
+    }
     const AuthInfo ={
         handleGoogleLogin,
         handleSignIn,
+        handleRegister,
         user,
-        
+
     }
 
     useEffect(()=>{

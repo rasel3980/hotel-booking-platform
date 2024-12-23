@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { authContext } from '../AuthProvider/AuthProvider';
 import { FcGoogle } from 'react-icons/fc';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import loginAnimationData from '../assets/Animation - 1734957972918.json'
+import loginAnimationData from '../assets/LoginAnimation.json'
 import Lottie from 'lottie-react';
 
 const Login = () => {
@@ -52,7 +52,7 @@ const Login = () => {
   <div className="hero-content flex-col lg:flex-row-reverse">
   <div className="text-center lg:text-left">
           <h1 className="text-5xl font-bold ml-8">Login now!</h1>
-          <Lottie animationData={loginAnimationData}></Lottie>
+          <Lottie style={{width:'400px',height:'auto'}} animationData={loginAnimationData}></Lottie>
         </div>
     <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl pb-5">
       <form onSubmit={handleLoginForm} className="card-body">
