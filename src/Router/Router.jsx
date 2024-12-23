@@ -5,6 +5,8 @@ import Home from '../Pages/Home';
 import Login from '../Pages/Login';
 import Register from '../Pages/Register';
 import { createBrowserRouter } from 'react-router-dom';
+import Rooms from '../Pages/Rooms';
+import MyBookingsRoom from '../Pages/MyBookingsRoom';
 
   const Router = createBrowserRouter([
     {
@@ -23,7 +25,15 @@ import { createBrowserRouter } from 'react-router-dom';
         {
             path:"/Register",
             element:<Register></Register>
-        }
+        },
+        {
+            path:"/rooms",
+            element:<Rooms></Rooms>
+        },
+        {
+            path:"/my-bookings",
+            element:<MyBookingsRoom></MyBookingsRoom>
+        },
       ]
     },
   ]);
