@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import sliderImage from '../../public/japanjpg.jpg'
+import sliderImage from '../assets/images/Rashid Khan-pro.jpg'
 
 const Slide = () => {
     return (
