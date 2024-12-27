@@ -6,13 +6,13 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
 // import required modules
-import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 
 import bgimg1 from '../assets/images/Faf du Plessis.jpg'
 import bgimg2 from '../assets/images/Quinton de Kock-pro.jpg'
 import bgimg3 from '../assets/images/Quinton de Kock-pro.jpg'
 import Slide from '../Pages/Slide'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 
 const Carousel = () => {
     return (
