@@ -33,9 +33,9 @@ import RoomsDetails from '../Pages/RoomsDetails';
             element:<Rooms></Rooms>
         },
         {
-            path:"/rom/:id",
+            path:"/room/:id",
             element:<RoomsDetails></RoomsDetails>,
-            loader: ({params})=>fetch(`http://localhost:5000/room/${params.id}`),
+            loader: ({params})=>fetch(`http://localhost:5000/rooms/${params.id}`),
         },
         {
             path:"/my-bookings",
