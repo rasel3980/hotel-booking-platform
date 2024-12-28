@@ -8,6 +8,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Rooms from '../Pages/Rooms';
 import MyBookingsRoom from '../Pages/MyBookingsRoom';
 import PrivateRoute from '../Private/PrivateRoute';
+import RoomsDetails from '../Pages/RoomsDetails';
 
   const Router = createBrowserRouter([
     {
@@ -30,6 +31,11 @@ import PrivateRoute from '../Private/PrivateRoute';
         {
             path:"/rooms",
             element:<Rooms></Rooms>
+        },
+        {
+            path:"/rom/:id",
+            element:<RoomsDetails></RoomsDetails>,
+            loader: ({params})=>fetch(`http://localhost:5000/room/${params.id}`),
         },
         {
             path:"/my-bookings",

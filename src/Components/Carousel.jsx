@@ -7,10 +7,10 @@ import 'swiper/css/navigation'
 
 // import required modules
 
-import bgimg1 from '../assets/images/Faf du Plessis.jpg'
-import bgimg2 from '../assets/images/Quinton de Kock-pro.jpg'
-import bgimg3 from '../assets/images/Quinton de Kock-pro.jpg'
-import Slide from '../Pages/Slide'
+import bgimg1 from '../assets/images/slider1.jpg'
+import bgimg2 from '../assets/images/slider2.jpg'
+import bgimg3 from '../assets/images/slider3.jpg'
+import Slide from './Slide'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Navigation, Pagination } from 'swiper/modules'
 
@@ -22,7 +22,7 @@ const Carousel = () => {
         centeredSlides={true}
         loop={true}
         autoplay={{
-          delay: 5000,
+          delay: 4000,
           disableOnInteraction: false,
         }}
         pagination={{
