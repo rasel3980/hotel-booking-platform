@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLoaderData } from 'react-router-dom';
+import { useLoaderData, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Swal from 'sweetalert2';
@@ -9,6 +9,7 @@ const RoomsDetails = () => {
     const [isOpenModal, setIsOpenModal] = useState(false); 
     const [selectedDate, setSelectedDate] = useState(null); 
     const [isBooked, setIsBooked] = useState(false); 
+    const navigate = useNavigate();
 
     const { 
         price_per_night, 
@@ -23,12 +24,19 @@ const RoomsDetails = () => {
         location 
     } = room;
 
+    const RoomBookedData = {
+        room_name,
+        photo,
+        price_per_night,
+    }
+
     const handleOpenModal = () => {
         setIsOpenModal(true);
     };
 
     const handleCloseModal = () => {
         setIsOpenModal(false);
+        setSelectedDate(null); 
     };
 
     const handleDateChange = (date) => {
@@ -37,15 +45,49 @@ const RoomsDetails = () => {
 
     const handleConfirmBooking = () => {
         if (availability_status === "Available" && selectedDate) {
-            setIsOpenModal(false);
-            Swal.fire({
-                title: "Success!",
-                text: "Room Booked successfully",
-                icon: "success",
-                confirmButtonText: "Cool",
-              });
+            fetch("http://localhost:5000/my-booked-room", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(RoomBookedData),
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.insertedId) {
+                    Swal.fire({
+                        title: "Success!",
+                        text: "Room Booked successfully",
+                        icon: "success",
+                        confirmButtonText: "Cool",
+                    });
+                    setIsOpenModal(false);
+                    navigate("/"); 
+                } else {
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Booking failed. Please try again.",
+                        icon: "error",
+                        confirmButtonText: "Close",
+                    });
+                }
+            })
+            .catch((error) => {
+                console.error("Booking failed:", error);
+                Swal.fire({
+                    title: "Error!",
+                    text: "An error occurred. Please try again later.",
+                    icon: "error",
+                    confirmButtonText: "Close",
+                });
+            });
         } else {
-            alert("Please select a valid date and ensure the room is available.");
+            Swal.fire({
+                title: "Invalid selection!",
+                text: "Please select a valid date and ensure the room is available.",
+                icon: "warning",
+                confirmButtonText: "Okay",
+            });
         }
     };
 

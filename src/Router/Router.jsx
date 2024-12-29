@@ -38,7 +38,7 @@ import RoomsDetails from '../Pages/RoomsDetails';
             loader: ({params})=>fetch(`http://localhost:5000/rooms/${params.id}`),
         },
         {
-            path:"/my-bookings",
+            path:"/my-booking-room",
             element:<PrivateRoute><MyBookingsRoom></MyBookingsRoom></PrivateRoute>
         },
       ]
