@@ -7,7 +7,7 @@ const MyBookingsRoom = () => {
   
     useEffect(() => {
       if (user?.email) {
-        fetch(`http://localhost:5000/my-booking-room/:email/${user?.email}`)
+        fetch(`http://localhost:5000/my-booked-room?email=${user.email}`)
           .then((res) => res.json())
           .then((data) => {
             setRooms(data);
@@ -17,6 +17,7 @@ const MyBookingsRoom = () => {
     console.log(rooms);
     return (
         <div className="overflow-x-auto">
+          my booking room : {rooms.length}
   <table className="table">
     {/* head */}
     <thead>
@@ -31,9 +32,9 @@ const MyBookingsRoom = () => {
       {/* row 1 */}
       {rooms.map(room => <tr>
         <th>1</th>
-        <td>{room.photo}</td>
-        <td>Quality Control Specialist</td>
-        <td>Blue</td>
+        <td><img className='w-64' src={room?.photo} alt="" /></td>
+        <td><strong>{room.room_name}</strong></td>
+        <td><strong>{room.price_per_night}</strong>$</td>
       </tr>)}
     </tbody>
   </table>

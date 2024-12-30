@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import Swal from 'sweetalert2';
+import { authContext } from '../AuthProvider/AuthProvider';
 
 const RoomsDetails = () => {
+    const {user} = useContext(authContext);
     const room = useLoaderData();
     const [isOpenModal, setIsOpenModal] = useState(false); 
     const [selectedDate, setSelectedDate] = useState(null); 
@@ -28,6 +30,8 @@ const RoomsDetails = () => {
         room_name,
         photo,
         price_per_night,
+        bookingEmail:user?.email,
+        
     }
 
     const handleOpenModal = () => {
@@ -116,7 +120,7 @@ const RoomsDetails = () => {
                         <li><strong>Address:</strong> {location.address}</li>
                         <li><strong>Nearby Landmarks:</strong></li>
                         <ul>
-                            {location.nearby_landmarks.map((landmark, index) => (
+                            {location?.nearby_landmarks?.map((landmark, index) => (
                                 <li key={index}>{landmark}</li>
                             ))}
                         </ul>
