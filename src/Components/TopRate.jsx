@@ -5,7 +5,7 @@ const TopRate = () => {
      const [rooms, setRooms] = useState();
     
       useEffect(() => {
-        fetch("https://hotel-booking-server-one-xi.vercel.app/top-reateed")
+        fetch("http://localhost:5000/top-reateed")
           .then((res) => res.json())
           .then((data) => {
             setRooms(data);

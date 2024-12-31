@@ -32,7 +32,7 @@ const Error = () => {
                 />
               </svg>
 
-              <span>Go back</span>
+            <Link to={'/'}>  <span>Go back</span></Link>
             </button>
 
             <Link

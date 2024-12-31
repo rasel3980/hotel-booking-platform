@@ -58,7 +58,7 @@ const RoomsDetails = () => {
 
   const handleConfirmBooking = () => {
     if (availability_status === "Available" && selectedDate) {
-      fetch("https://hotel-booking-server-one-xi.vercel.app/my-booked-room", {
+      fetch("http://localhost:5000/my-booked-room", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -123,7 +123,7 @@ const RoomsDetails = () => {
             <strong>Amenities:</strong>
           </p>
           <ul>
-            {available_amenities.map((amenity, index) => (
+            {available_amenities?.map((amenity, index) => (
               <li key={index}>{amenity}</li>
             ))}
           </ul>
@@ -132,10 +132,10 @@ const RoomsDetails = () => {
           </p>
           <ul>
             <li>
-              <strong>Hotel:</strong> {location.hotel_name}
+              <strong>Hotel:</strong> {location?.hotel_name}
             </li>
             <li>
-              <strong>Address:</strong> {location.address}
+              <strong>Address:</strong> {location?.address}
             </li>
             <li>
               <strong>Nearby Landmarks:</strong>

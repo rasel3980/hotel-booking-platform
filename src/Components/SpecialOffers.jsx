@@ -1,23 +1,60 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet';
 
 const SpecialOffers = () => {
+  const [showModal, setShowModal] = useState(false); 
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowModal(true); 
+    }, 2000);
+
+    return () => clearTimeout(timer); 
+  }, []);
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+  };
+
   return (
-    <section className="py-16 bg-gray-50 text-center">
-      <div className="max-w-2xl mx-auto px-4">
-        <div className="bg-white p-8 rounded-3xl shadow-2xl">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">Special Offers</h2>
-          <p className="text-lg text-gray-500 mb-6">
-            Don't miss out on our exclusive offers! Plan your dream vacation with unbeatable discounts. Limited time only.
-          </p>
-          <a
-            href="/offers"
-            className="btn btn-primary text-white bg-blue-500 hover:bg-blue-600 transition-all duration-300 rounded-full px-8 py-3"
-          >
-            See Offers
-          </a>
+    <div>
+      <Helmet>
+        <title>Home | Hotel Booking</title>
+      </Helmet>
+      
+      <h1>Welcome to Our Hotel Booking Website</h1>
+
+      {showModal && (
+        <div className="modal modal-open">
+          <div className="modal-box relative">
+            <h3 className="font-bold text-xl mb-5">Special Offers & Promotions</h3>
+            
+            <p className="text-lg mb-4">
+              Don't miss out on our exclusive offers! Book your stay now and save big on your next adventure.
+            </p>
+
+            <img
+              src="https://via.placeholder.com/600x300?text=Special+Offer+Banner"
+              alt="Special Offer"
+              className="w-full rounded-lg mb-5"
+            />
+
+            <div className="modal-action">
+              <button className="btn btn-primary" onClick={handleCloseModal}>
+                Close
+              </button>
+              <a href="/promotions" className="btn btn-secondary">
+                Learn More
+              </a>
+            </div>
+          </div>
         </div>
+      )}
+
+      <div className="main-content">
+        <p>Explore our amazing rooms and book your next stay at the best prices!</p>
       </div>
-    </section>
+    </div>
   );
 };
 
