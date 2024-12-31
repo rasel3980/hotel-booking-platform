@@ -15,8 +15,10 @@ const UpdateRoom = () => {
         user_reviews, 
         room_description, 
         available_amenities, 
-        location 
+        location ,
+        date
     } = room;
+    console.log(room);
     return (
         <div>
             
