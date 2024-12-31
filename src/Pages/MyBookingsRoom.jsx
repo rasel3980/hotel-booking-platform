@@ -14,7 +14,7 @@ const MyBookingsRoom = () => {
           setRooms(data);
         });
     }
-  }, [user]); // Add user?.email to the dependency array
+  }, [user]); 
 
   // handleCancel
   const handleDelete = (id) => {
