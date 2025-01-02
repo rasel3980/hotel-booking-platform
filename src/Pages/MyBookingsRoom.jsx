@@ -56,6 +56,7 @@ const MyBookingsRoom = () => {
           headers: {
             'Content-Type': 'application/json',
           },
+          
         })
         .then((response) => {
           if (response.data.modifiedCount > 0) {
@@ -125,6 +126,7 @@ const MyBookingsRoom = () => {
               <th className="text-2xl">Image</th>
               <th className="text-2xl">Name</th>
               <th className="text-2xl">Price</th>
+              <th className="text-2xl">Booked-date</th>
               <th className="text-2xl">Option</th>
               <th className="text-2xl">Update</th>
             </tr>
@@ -132,7 +134,7 @@ const MyBookingsRoom = () => {
           <tbody>
             {rooms.map((room) => (
               <tr key={room._id}>
-                <th>1</th>
+                <th></th>
                 <td>
                   <img
                     className="w-64 rounded-lg"
@@ -145,6 +147,9 @@ const MyBookingsRoom = () => {
                 </td>
                 <td>
                   <strong className="text-xl">{room.price_per_night}</strong>$
+                </td>
+                <td>
+                  <strong>{format(new Date(room.date), "MMM dd, yyyy")}</strong>
                 </td>
                 <td>
                   <button

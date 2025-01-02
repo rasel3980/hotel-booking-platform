@@ -6,8 +6,10 @@ import Footer from '../Components/Footer';
 const MainLayout = () => {
     return (
         <div>
-            <div className='w-11/12 mx-auto'>
+            <div>
+            <div className='sticky top-0 z-50 backdrop-blur-lg bg-white/30 shadow-lg '>
             <Header></Header>
+            </div>
             <div className='min-h-[calc(100vh-361px)]'>
             <Outlet></Outlet>
             </div>

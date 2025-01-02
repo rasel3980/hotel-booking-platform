@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet';
+import offerBanner from '../assets/images/special-offer.jpg'
 
 const SpecialOffers = () => {
   const [showModal, setShowModal] = useState(false); 
@@ -7,12 +8,12 @@ const SpecialOffers = () => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowModal(true); 
-    }, 2000);
+    }, 5000);
 
     return () => clearTimeout(timer); 
   }, []);
 
-  const handleCloseModal = () => {
+  const handleCloseModal = () =>{
     setShowModal(false);
   };
 
@@ -21,9 +22,7 @@ const SpecialOffers = () => {
       <Helmet>
         <title>Home | Hotel Booking</title>
       </Helmet>
-      
-      <h1>Welcome to Our Hotel Booking Website</h1>
-
+    
       {showModal && (
         <div className="modal modal-open">
           <div className="modal-box relative">
@@ -34,7 +33,7 @@ const SpecialOffers = () => {
             </p>
 
             <img
-              src="https://via.placeholder.com/600x300?text=Special+Offer+Banner"
+              src={offerBanner}
               alt="Special Offer"
               className="w-full rounded-lg mb-5"
             />
@@ -43,17 +42,13 @@ const SpecialOffers = () => {
               <button className="btn btn-primary" onClick={handleCloseModal}>
                 Close
               </button>
-              <a href="/promotions" className="btn btn-secondary">
+              <a href="/rooms" className="btn btn-secondary">
                 Learn More
               </a>
             </div>
           </div>
         </div>
       )}
-
-      <div className="main-content">
-        <p>Explore our amazing rooms and book your next stay at the best prices!</p>
-      </div>
     </div>
   );
 };

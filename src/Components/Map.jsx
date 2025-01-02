@@ -12,8 +12,8 @@ const MapHome = () => {
   const toggleInfo = () => setShowInfo(!showInfo);
 
   return (
-    <div>
-      <h2 className="text-center text-xl font-semibold">Landon Top 1 Hotel</h2>
+    <div className='my-8 w-11/12 mx-auto'>
+      <h2 className="text-center text-xl font-semibold">Our Hotel Location</h2>
       <p className="text-center mb-4">{hotelAddress}</p>
 
       <Map height={300} defaultCenter={hotelCoordinates} defaultZoom={13}>

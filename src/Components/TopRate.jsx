@@ -15,7 +15,11 @@ const TopRate = () => {
     //   console.log(rooms);
     return (
         <div>
-            <div className="grid grid-cols-3 gap-5">
+          <div className="main-content text-center py-7">
+          <h1 className='text-2xl'>Welcome to Our Hotel Booking Website</h1>
+        <p>Explore our amazing rooms and book your next stay at the best prices!</p>
+      </div>
+            <div className="grid lg:grid-cols-3 justify-center gap-5">
         {rooms?.map((room)=> <RoomsCard key={room._id} room={room}></RoomsCard>)}
       </div>
         </div>
