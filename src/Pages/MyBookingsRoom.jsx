@@ -4,43 +4,45 @@ import Swal from "sweetalert2";
 import { format } from "date-fns";
 import DatePicker from "react-datepicker";
 import { Helmet } from "react-helmet";
+import axios from "axios";
+import useAxiosSecure from "../Components/Hooks/useAxiosSecure";
 
 const MyBookingsRoom = () => {
   const { user } = useContext(authContext);
   const [rooms, setRooms] = useState([]);
+  const secureAxios = useAxiosSecure();
   const [room, setRoom] = useState({});
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
+  console.log("rooms",rooms);
 
-  // Fetch rooms when the component mounts
   useEffect(() => {
     if (user?.email) {
-      fetch(`http://localhost:5000/my-booked-room?email=${user.email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          setRooms(data);
+     
+      secureAxios.get(`/my-booked-room?email=${user.email}`)
+        .then((response) => {
+          setRooms(response.data);
+        })
+        .catch((error) => {
+          console.error("There was an error fetching the booked rooms:", error);
         });
     }
   }, [user]);
 
-  // Open the modal and set the selected room
   const handleOpenModal = (selectedRoom) => {
     setRoom(selectedRoom);
     setIsOpenModal(true);
   };
 
-  // Close the modal
   const handleCloseModal = () => {
     setIsOpenModal(false);
-    setSelectedDate(new Date());  // Reset selected date
+    setSelectedDate(new Date());
   };
 
-  // Handle date change from the DatePicker
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  // Update the booking with the selected date
   const handleUpdated = () => {
     const updatedDate = {
       ...room,
@@ -48,16 +50,15 @@ const MyBookingsRoom = () => {
     };
 
     if (selectedDate) {
-      fetch(`http://localhost:5000/update-room/${room._id}`, {
-        method: "PUT",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(updatedDate),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.modifiedCount > 0) {
+      axios
+        .put(`https://hotel-booking-server-one-xi.vercel.app/update-room/${room._id}`, updatedDate, {
+          withCredentials: true, 
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+        .then((response) => {
+          if (response.data.modifiedCount > 0) {
             Swal.fire({
               position: "top-center",
               icon: "success",
@@ -65,13 +66,15 @@ const MyBookingsRoom = () => {
               showConfirmButton: false,
               timer: 2000,
             });
-            handleCloseModal();  // Close the modal after success
+            handleCloseModal();  
           }
+        })
+        .catch((error) => {
+          console.error("There was an error updating the room:", error);
         });
     }
   };
 
-  // Handle canceling a booking
   const handleCancel = (id) => {
     Swal.fire({
       title: "Are you sure?",
@@ -83,17 +86,22 @@ const MyBookingsRoom = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/room-cancel/${id}`, {
-          method: "DELETE",
-        }).then(() => {
-          Swal.fire({
-            title: "Deleted!",
-            text: "Your room booking has been deleted.",
-            icon: "success",
+        axios
+          .delete(`https://hotel-booking-server-one-xi.vercel.app/room-cancel/${id}`, {
+            withCredentials: true,  
+          })
+          .then(() => {
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your room booking has been deleted.",
+              icon: "success",
+            });
+            const remainingRooms = rooms.filter((room) => room._id !== id);
+            setRooms(remainingRooms);
+          })
+          .catch((error) => {
+            console.error("There was an error canceling the room:", error);
           });
-          const remainingRooms = rooms.filter((room) => room._id !== id);
-          setRooms(remainingRooms);
-        });
       }
     });
   };
@@ -104,7 +112,7 @@ const MyBookingsRoom = () => {
         <title>My-booking | Hotel Booking</title>
       </Helmet>
       <h2 className="text-3xl font-semibold mb-5">
-        My Booking Rooms: {rooms.length}
+        My Booking Rooms Available: {rooms.length}
       </h2>
 
       {rooms.length === 0 ? (

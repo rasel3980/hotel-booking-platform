@@ -4,6 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Swal from "sweetalert2";
 import { authContext } from "../AuthProvider/AuthProvider";
+import axios from "axios";
 
 const RoomsDetails = () => {
   const { user } = useContext(authContext);
@@ -13,7 +14,6 @@ const RoomsDetails = () => {
   const [isBooked, setIsBooked] = useState(false);
   const navigate = useNavigate();
 
-//   console.log(room?.review);
   const {
     price_per_night,
     room_name,
@@ -32,7 +32,7 @@ const RoomsDetails = () => {
     room_name,
     photo,
     price_per_night,
-    bookingEmail: user?.email,
+    bookingEmail: user?.Email,
     room_type,
     availability_status,
     room_size,
@@ -58,16 +58,14 @@ const RoomsDetails = () => {
 
   const handleConfirmBooking = () => {
     if (availability_status === "Available" && selectedDate) {
-      fetch("http://localhost:5000/my-booked-room", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(RoomBookedData),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.insertedId) {
+      axios
+        .post("https://hotel-booking-server-one-xi.vercel.app/my-booked-room", RoomBookedData, {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+        .then((response) => {
+          if (response.data.insertedId) {
             Swal.fire({
               title: "Success!",
               text: "Room Booked successfully",
@@ -75,7 +73,7 @@ const RoomsDetails = () => {
               confirmButtonText: "Cool",
             });
             setIsOpenModal(false);
-            navigate("/");
+            navigate("/my-booking-room");
           } else {
             Swal.fire({
               title: "Error!",
@@ -128,12 +126,9 @@ const RoomsDetails = () => {
             ))}
           </ul>
           <p>
-            <strong>Location:</strong>
+            <strong>Location: </strong>{location.country}_{location.city}_{location.state}
           </p>
           <ul>
-            <li>
-              <strong>Hotel:</strong> {location?.hotel_name}
-            </li>
             <li>
               <strong>Address:</strong> {location?.address}
             </li>

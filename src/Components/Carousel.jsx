@@ -35,19 +35,19 @@ const Carousel = () => {
         <SwiperSlide>
           <Slide
             image={bgimg1}
-            text='Get Your Web Development Projects Done in minutes'
+            text='Charming farmhouse surrounded by greenery, perfect for family retreats'
           />
         </SwiperSlide>
         <SwiperSlide>
           <Slide
             image={bgimg2}
-            text='Get Your Graphics Design Projects Done in minutes'
+            text='A cozy cottage with lake views, perfect for a peaceful retreat.'
           />
         </SwiperSlide>
         <SwiperSlide>
           <Slide
             image={bgimg3}
-            text='Start Your Digital Marketing Campaigns up n running'
+            text='A serene bungalow with ocean views, perfect for relaxation.'
           />
         </SwiperSlide>
       </Swiper>

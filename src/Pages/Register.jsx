@@ -4,45 +4,58 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import RegisterAnimation from '../assets/Animation - 1734957972918.json'
 import Lottie from 'lottie-react';
+import axios from 'axios';
 
 const Register = () => {
     const {handleRegister} = useContext(authContext);
   const [errorMessage, setErrorMessage] = useState("");
   const [success, setSuccess] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+  const [showpassword, setShowpassword] = useState(false);
   const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const Email = event.target.email.value;
-    const Password = event.target.password.value;
+    const email = event.target.email.value;
+    const password = event.target.password.value;
     const Name = event.target.name.value;
     const photo = event.target.url.value;
-    // console.log(Name,Email, Password,photo);
+    // console.log(Name,email, password,photo);
     setErrorMessage("");
     setSuccess(false);
-    if (Password.length < 6) {
-      setErrorMessage("Password should be 6 character or longer");
+    if (password.length < 6) {
+      setErrorMessage("password should be 6 character or longer");
       return;
     }
 
-    if (!/[a-z]/.test(Password)) {
-      setErrorMessage("Password must contain at least one lowercase letter");
+    if (!/[a-z]/.test(password)) {
+      setErrorMessage("password must contain at least one lowercase letter");
       return;
     }
-    if (!/[A-Z]/.test(Password)) {
-      setErrorMessage("Password must contain at least one Uppercase letter");
+    if (!/[A-Z]/.test(password)) {
+      setErrorMessage("password must contain at least one Uppercase letter");
       return;
     }
 
-    handleRegister(Email, Password)
+    handleRegister(email, password)
     .then((result) => {
-      // console.log(result.user);
+      const user = { email: email };
+      axios.post("https://hotel-booking-server-one-xi.vercel.app/jwt", user, { withCredentials: true })
+        .then((data) => {
+        })
+        .catch((error) => {
+          console.error("JWT token generation failed:", error);
+        });
+
       setSuccess(true);
-      navigate("/");
-      event.target.reset();
+      navigate('/');
+      event.target.reset(); 
+    })
+    .catch((error) => {
+      setErrorMessage(error.message); 
+      setSuccess(false); 
     });
-  };
+};
+
     return (
         <div className="hero bg-base-200 min-h-screen">
       <div className="hero-content flex-col lg:flex-row-reverse">
@@ -82,29 +95,29 @@ const Register = () => {
                 <span className="label-text">Email</span>
               </label>
               <input
-                type="email"
+                type="Email"
                 name="email"
-                placeholder="email"
+                placeholder="Email"
                 className="input input-bordered"
                 required
               />
             </div>
             <div className="form-control relative ">
               <label className="label">
-                <span className="label-text">Password</span>
+                <span className="label-text">password</span>
               </label>
               <input
-                type={showPassword ? "text" : "password"}
+                type={showpassword ? "text" : "password"}
                 name="password"
                 placeholder="password"
                 className="input input-bordered"
                 required
               />
               <button
-                onClick={() => setShowPassword(!showPassword)}
+                onClick={() => setShowpassword(!showpassword)}
                 className="btn absolute right-3 top-12 btn-xs"
               >
-                {showPassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>}{" "}
+                {showpassword ? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>}{" "}
               </button>
             </div>
             <div className="form-control mt-6">

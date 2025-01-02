@@ -1,17 +1,26 @@
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import RoomsCard from "./RoomsCard";
+import axios from "axios";
 
 const Rooms = () => {
   const [rooms, setRooms] = useState([]);
   const [sort, setSort] = useState(''); 
 
   useEffect(() => {
-    fetch(`http://localhost:5000/room-data?sort=${sort}`)
-      .then((res) => res.json())
-      .then((data) => {
-        setRooms(data);
-      });
+    const fetchRooms = async () => {
+      try {
+        const response = await axios.get(`https://hotel-booking-server-one-xi.vercel.app/room-data`, {
+          params: {
+            sort: sort,  
+          },
+        });
+        setRooms(response.data); 
+      } catch (error) {
+        console.error("Error fetching rooms:", error);
+      }
+    };
+    fetchRooms();
   }, [sort]);
 
   return (

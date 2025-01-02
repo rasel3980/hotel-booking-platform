@@ -18,7 +18,7 @@ const UpdateRoom = () => {
         location ,
         date
     } = room;
-    console.log(room);
+    // console.log(room);
     return (
         <div>
             

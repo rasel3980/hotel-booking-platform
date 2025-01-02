@@ -36,12 +36,12 @@ import UpdateRoom from '../Components/UpdateRoom';
         {
             path:"/room/:id",
             element:<RoomsDetails></RoomsDetails>,
-            loader: ({params})=>fetch(`http://localhost:5000//rooms/${params.id}`),
+            loader: ({params})=>fetch(`https://hotel-booking-server-one-xi.vercel.app/rooms/${params.id}`),
         },
         {
             path:"/update-room/:id",
             element:<UpdateRoom></UpdateRoom>,
-            // loader: ({params})=>fetch(`http://localhost:5000//rooms/my-booked-room/${params.id}`),
+            // loader: ({params})=>fetch(`https://hotel-booking-server-one-xi.vercel.app/rooms/my-booked-room/${params.id}`),
         },
         {
             path:"/my-booking-room",
