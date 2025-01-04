@@ -14,8 +14,6 @@ const MyBookingsRoom = () => {
   const [room, setRoom] = useState({});
   const [isOpenModal, setIsOpenModal] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date());
-  console.log("rooms",rooms);
-
   useEffect(() => {
     if (user?.email) {
      

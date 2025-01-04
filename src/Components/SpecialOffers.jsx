@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { Helmet } from 'react-helmet';
 import offerBanner from '../assets/images/special-offer.jpg'
 
 const SpecialOffers = () => {
@@ -19,9 +18,6 @@ const SpecialOffers = () => {
 
   return (
     <div>
-      <Helmet>
-        <title>Home | Hotel Booking</title>
-      </Helmet>
     
       {showModal && (
         <div className="modal modal-open">

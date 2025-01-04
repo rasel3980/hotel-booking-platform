@@ -13,7 +13,6 @@ const RoomsDetails = () => {
   const [selectedDate, setSelectedDate] = useState(null);
   const [isBooked, setIsBooked] = useState(false);
   const navigate = useNavigate();
-
   const {
     price_per_night,
     room_name,
@@ -32,7 +31,7 @@ const RoomsDetails = () => {
     room_name,
     photo,
     price_per_night,
-    bookingEmail: user?.Email,
+    bookingEmail: user?.email,
     room_type,
     availability_status,
     room_size,

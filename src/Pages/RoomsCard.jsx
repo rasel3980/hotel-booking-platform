@@ -9,10 +9,7 @@ const RoomsCard = ({ room }) => {
     room_description,
     price_per_night,
     room_type,
-    available_amenities,
     photo,
-    availability_status,
-    user_reviews,
     review
   } = room;
 

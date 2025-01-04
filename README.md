@@ -19,4 +19,4 @@ A fully-functional hotel booking web application that allows users to browse roo
 - **Framer Motion** - For animations and smooth UI transitions.
 - **Toastify / Sweetalert2** - For displaying alerts and notifications.
 - **MongoDB** (or any other database) - For storing room details, user bookings, and reviews.
-## Website Live link:(https://hotel-booking-platform-b1fc3.web.app/)
+## Website Live link:(https://hotel-booking-server-one-xi.vercel.app/)

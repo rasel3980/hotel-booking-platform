@@ -1,7 +1,6 @@
 import React, { useContext } from 'react';
 import { authContext } from '../AuthProvider/AuthProvider';
 import Carousel from '../Components/Carousel';
-import Slide from '../Components/Slide';
 import MapHome from '../Components/Map';
 import SpecialOffers from '../Components/SpecialOffers';
 import WhyChooseUs from '../Components/WhyChooseUs';
@@ -18,11 +17,9 @@ const Home = () => {
       </Helmet>
         <Carousel></Carousel>
         <TopRate/>
-        <WhyChooseUs></WhyChooseUs>
         <SpecialOffers></SpecialOffers>
-
-
         <MapHome/>
+        <WhyChooseUs></WhyChooseUs>
         </>
     );
 };
