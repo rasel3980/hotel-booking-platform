@@ -1,7 +1,7 @@
 # Hotel Booking Platform
 ## Description
 A fully-functional hotel booking web application that allows users to browse rooms, book their stays, view room details, post reviews, and manage bookings. This app integrates a variety of features such as JWT authentication, Google login, date pickers, and a responsive UI with modern libraries like React, Leaflet, and React Router.
-## Website Live link:(https://hotel-booking-server-one-xi.vercel.app/)
+## Website Live link:(https://hotel-booking-platform-b1fc3.web.app/)
 ### Key Features:
 - **User Authentication**: Email/password and Google login.
 - **Room Listing**: Browse and filter available rooms.

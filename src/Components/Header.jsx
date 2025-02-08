@@ -3,7 +3,6 @@ import { NavLink } from 'react-router-dom';
 import { FaUser, FaUserAlt } from "react-icons/fa";
 import { authContext } from '../AuthProvider/AuthProvider';
 import { Typewriter } from 'react-simple-typewriter';
-
 const Header = () => {
     const { handleLogout, user } = useContext(authContext);
 
