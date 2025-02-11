@@ -5,12 +5,9 @@ import { authContext } from '../AuthProvider/AuthProvider';
 import { Typewriter } from 'react-simple-typewriter';
 const Header = () => {
     const { handleLogout, user } = useContext(authContext);
-
     const authLinks = (
         <>
             <li><NavLink to="/">Home</NavLink></li>
-            <li><NavLink to="/rooms">Rooms</NavLink></li>
-            <li><NavLink to="/my-booking-room">My Bookings</NavLink></li>
             <li><NavLink to="/login">Login</NavLink></li>
             <li><NavLink to="/register">Register</NavLink></li>
         </>
@@ -25,7 +22,9 @@ const Header = () => {
     );
 
     return (
-        <div className="navbar bg-base-100">
+        <>
+        <div className='sticky bg-[#3498db] top-0 w-full'>
+        <div className="navbar w-11/12 mx-auto">
             <div className="navbar-start">
                 <div className="dropdown">
                     <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -75,7 +74,7 @@ const Header = () => {
                             <img
                                 className="w-10 rounded-full cursor-pointer"
                                 src={user?.photoURL}
-                                alt="userPhoto"
+                                alt='profile'
                             />
                         </NavLink>
                         <button onClick={handleLogout} className="ml-4 btn btn-danger">Logout</button>
@@ -87,6 +86,8 @@ const Header = () => {
                 )}
             </div>
         </div>
+        </div>
+        </>
     );
 };
 
