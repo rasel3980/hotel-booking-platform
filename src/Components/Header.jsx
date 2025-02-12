@@ -11,28 +11,25 @@ const Header = () => {
     const { handleLogout, user } = useContext(authContext);
     const [isDarkMode, setIsDarkMode] = useState(false);
 
-    // Set the initial state based on localStorage or default to light mode
     useEffect(() => {
         const savedTheme = localStorage.getItem("theme");
         if (savedTheme === "dark") {
             setIsDarkMode(true);
-            document.body.classList.add("dark");  // Ensure dark class is added to body
+            document.body.classList.add("dark");
         }
     }, []);
 
-    // Toggle dark mode
     const toggleDarkMode = () => {
         setIsDarkMode(prevMode => !prevMode);
     };
 
-    // Save the theme choice to localStorage
     useEffect(() => {
         if (isDarkMode) {
             localStorage.setItem("theme", "dark");
-            document.body.classList.add("dark");  // Add 'dark' class to body
+            document.body.classList.add("dark"); 
         } else {
             localStorage.setItem("theme", "light");
-            document.body.classList.remove("dark");  // Remove 'dark' class from body
+            document.body.classList.remove("dark");  
         }
     }, [isDarkMode]);
 
@@ -98,7 +95,6 @@ const Header = () => {
                     </ul>
                 </div>
                 <div className="navbar-end flex items-center">
-                    {/* Dark Mode Toggle Button */}
                     <button 
                         className="btn btn-ghost text-xl mr-4"
                         onClick={toggleDarkMode}

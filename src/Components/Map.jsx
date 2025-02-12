@@ -8,7 +8,6 @@ const hotelAddress = "Landon Top 1 Hotel, 123 King Street, London, UK"; // Hotel
 const MapHome = () => {
   const [showInfo, setShowInfo] = useState(false);
 
-  // Toggle visibility of the custom popup
   const toggleInfo = () => setShowInfo(!showInfo);
 
   return (
