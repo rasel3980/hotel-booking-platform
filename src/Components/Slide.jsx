@@ -18,7 +18,7 @@ const Slide = ({image,text}) => {
             to='/rooms'
             className='w-full px-5 py-4 mt-4 text-sm font-medium text-white capitalize transition-colors duration-300 transform bg-gray-600 rounded-md lg:w-auto hover:bg-gray-500 focus:outline-none focus:bg-gray-500'
           >
-            Explore this
+            See More
           </Link>
         </div>
       </div>
