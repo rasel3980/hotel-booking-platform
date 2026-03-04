@@ -7,79 +7,99 @@ import loginAnimationData from '../assets/LoginAnimation.json';
 import Lottie from 'lottie-react';
 import axios from 'axios';
 
-const Login = () => {
-  const { handleSignIN, handleGoogleLogin, user } = useContext(authContext);
-  const [errorMessage, setErrorMessage] = useState('');
-  const [success, setSuccess] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
+const Login: React.FC = () => {
+  const auth = useContext(authContext);
+  if (!auth) throw new Error('Login must be used within AuthProvider');
+
+  const { handleSignIn, handleGoogleLogin } = auth;
+
+  const [errorMessage, setErrorMessage] = useState<string>('');
+  const [success, setSuccess] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const handleLoginForm = (event) => {
+  const handleLoginForm = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    const email = event.target.email.value;
-    const password = event.target.password.value;
+    const form = event.currentTarget;
+    const email = (form.elements.namedItem('email') as HTMLInputElement).value;
+    const password = (form.elements.namedItem('password') as HTMLInputElement).value;
+
     setErrorMessage('');
     setSuccess(false);
 
-    handleSignIN(email, password)
-      .then((result) => {
-        const user = {email:email}
-        axios.post("https://hotel-booking-server-one-xi.vercel.app/jwt", user, {withCredentials:true})
-        .then(data=>{
-        })
+    handleSignIn(email, password)
+      .then(() => {
+        axios.post(
+          'https://hotel-booking-server-one-xi.vercel.app/jwt',
+          { email },
+          { withCredentials: true }
+        );
         setSuccess(true);
         navigate('/');
-        event.target.reset();
+        form.reset();
       })
-      .catch((error) => {
+      .catch((error: Error) => {
         setErrorMessage(error.message);
         setSuccess(false);
       });
   };
 
-  const handleLogin = async () => {
+  const handleGoogleLoginClick = async (): Promise<void> => {
     try {
-      const result = await handleGoogleLogin(); 
-  
-      const user = { email: result.email };
-      axios.post("https://hotel-booking-server-one-xi.vercel.app/jwt", user, { withCredentials: true })
-        .then((data) => {
-        });
-  
-      navigate('/'); 
-    } catch (error) {
+      const result = await handleGoogleLogin();
+      const email = result.user.email;
+
+      await axios.post(
+        'https://hotel-booking-server-one-xi.vercel.app/jwt',
+        { email },
+        { withCredentials: true }
+      );
+
+      navigate('/');
+    } catch {
       setErrorMessage('Google login failed!');
     }
   };
-
   return (
     <>
-      <div className="hero bg-base-200 ">
+      <div className="hero bg-base-200">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-left">
             <h1 className="text-5xl font-bold ml-8">Login now!</h1>
             <Lottie style={{ width: '400px', height: 'auto' }} animationData={loginAnimationData} />
           </div>
+
           <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl pb-5">
             <form onSubmit={handleLoginForm} className="card-body">
               <div className="form-control">
                 <label className="label">
                   <span className="label-text">Email</span>
                 </label>
-                <input type="Email" name="email" placeholder="Email" className="input input-bordered" required />
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="Email"
+                  className="input input-bordered"
+                  required
+                />
               </div>
-              <div className="form-control relative ">
+
+              <div className="form-control relative">
                 <label className="label">
                   <span className="label-text">Password</span>
                 </label>
                 <input
                   type={showPassword ? 'text' : 'password'}
                   name="password"
-                  placeholder="password"
+                  placeholder="Password"
                   className="input input-bordered"
                   required
                 />
-                <button onClick={() => setShowPassword(!showPassword)} className="btn absolute right-3 top-12 btn-xs">
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="btn absolute right-3 top-12 btn-xs"
+                >
                   {showPassword ? <FaEyeSlash /> : <FaEye />}
                 </button>
                 <label className="label">
@@ -88,8 +108,9 @@ const Login = () => {
                   </NavLink>
                 </label>
               </div>
+
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Login</button>
+                <button type="submit" className="btn btn-primary">Login</button>
               </div>
             </form>
 
@@ -99,8 +120,13 @@ const Login = () => {
                 <NavLink to="/register">Register</NavLink>
               </button>
             </p>
+
             <div className="flex justify-center items-center">
-              <button onClick={handleLogin} className="flex items-center justify-center">
+              <button
+                type="button"
+                onClick={handleGoogleLoginClick}
+                className="flex items-center justify-center"
+              >
                 <FcGoogle size={40} />
                 Login with Google
               </button>

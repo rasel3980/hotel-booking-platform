@@ -1,4 +1,3 @@
-import React from 'react';
 import { FaLocationDot } from "react-icons/fa6";
 import { BiSolidPhoneCall } from "react-icons/bi";
 import { GrMail } from "react-icons/gr";

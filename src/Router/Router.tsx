@@ -1,4 +1,4 @@
-import React from 'react';
+
 import MainLayout from '../MainLayout/MainLayout';
 import Error from '../Pages/Error';
 import Home from '../Pages/Home';

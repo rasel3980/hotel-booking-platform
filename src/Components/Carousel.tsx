@@ -1,11 +1,8 @@
-// Import Swiper React components
 
-// Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
-// import required modules
 
 import bgimg1 from '../assets/images/slider1.jpg'
 import bgimg2 from '../assets/images/slider2.jpg'

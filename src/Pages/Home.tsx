@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { authContext } from '../AuthProvider/AuthProvider';
 import Carousel from '../Components/Carousel';
 import MapHome from '../Components/Map';
@@ -9,7 +9,7 @@ import { Helmet } from 'react-helmet';
 
 
 const Home = () => {
-    const {user}=useContext(authContext);
+    useContext(authContext);
     return (
         <>
          <Helmet>

@@ -1,80 +1,87 @@
 import React, { useContext, useEffect, useState } from "react";
 import { authContext } from "../AuthProvider/AuthProvider";
-import Swal from "sweetalert2";
+import Swal, { SweetAlertPosition } from "sweetalert2";
 import { format } from "date-fns";
 import DatePicker from "react-datepicker";
 import { Helmet } from "react-helmet";
 import axios from "axios";
 import useAxiosSecure from "../Components/Hooks/useAxiosSecure";
 
-const MyBookingsRoom = () => {
-  const { user } = useContext(authContext);
-  const [rooms, setRooms] = useState([]);
+interface BookedRoom {
+  _id: string;
+  room_name: string;
+  photo: string;
+  price_per_night: number;
+  date: string | Date;
+  room_type: string;
+  room_description: string;
+  available_amenities?: string[];
+}
+
+const MyBookingsRoom: React.FC = () => {
+  const auth = useContext(authContext);
+  if (!auth) throw new Error("MyBookingsRoom must be used within AuthProvider");
+
+  const { user } = auth;
   const secureAxios = useAxiosSecure();
-  const [room, setRoom] = useState({});
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date());
+
+  const [rooms, setRooms] = useState<BookedRoom[]>([]);
+  const [room, setRoom] = useState<BookedRoom | null>(null);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
   useEffect(() => {
     if (user?.email) {
-     
-      secureAxios.get(`/my-booked-room?email=${user.email}`)
-        .then((response) => {
-          setRooms(response.data);
-        })
-        .catch((error) => {
-          console.error("There was an error fetching the booked rooms:", error);
-        });
+      secureAxios
+        .get<BookedRoom[]>(`/my-booked-room?email=${user.email}`)
+        .then((response) => setRooms(response.data))
+        .catch((error) => console.error("Error fetching booked rooms:", error));
     }
   }, [user]);
 
-  const handleOpenModal = (selectedRoom) => {
+  const handleOpenModal = (selectedRoom: BookedRoom): void => {
     setRoom(selectedRoom);
     setIsOpenModal(true);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModal = (): void => {
     setIsOpenModal(false);
     setSelectedDate(new Date());
   };
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleDateChange = (date: Date | null): void => {
+    if (date) setSelectedDate(date);
   };
 
-  const handleUpdated = () => {
-    const updatedDate = {
-      ...room,
-      date: selectedDate,
-    };
+  const handleUpdated = (): void => {
+    if (!room || !selectedDate) return;
 
-    if (selectedDate) {
-      axios
-        .put(`https://hotel-booking-server-one-xi.vercel.app/update-room/${room._id}`, updatedDate, {
-          withCredentials: true, 
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          
-        })
-        .then((response) => {
-          if (response.data.modifiedCount > 0) {
-            Swal.fire({
-              position: "top-center",
-              icon: "success",
-              title: "Updated successfully",
-              showConfirmButton: false,
-              timer: 2000,
-            });
-            handleCloseModal();  
-          }
-        })
-        .catch((error) => {
-          console.error("There was an error updating the room:", error);
-        });
-    }
+    const updatedDate: BookedRoom = { ...room, date: selectedDate };
+
+    axios
+      .put(
+        `https://hotel-booking-server-one-xi.vercel.app/update-room/${room._id}`,
+        updatedDate,
+        {
+          withCredentials: true,
+          headers: { "Content-Type": "application/json" },
+        }
+      )
+      .then((response) => {
+        if (response.data.modifiedCount > 0) {
+          Swal.fire({
+            position: "top-center" as SweetAlertPosition,
+            icon: "success",
+            title: "Updated successfully",
+            showConfirmButton: false,
+            timer: 2000,
+          });
+          handleCloseModal();
+        }
+      })
+      .catch((error) => console.error("Error updating the room:", error));
   };
-
-  const handleCancel = (id) => {
+  const handleCancel = (id: string): void => {
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -86,30 +93,28 @@ const MyBookingsRoom = () => {
     }).then((result) => {
       if (result.isConfirmed) {
         axios
-          .delete(`https://hotel-booking-server-one-xi.vercel.app/room-cancel/${id}`, {
-            withCredentials: true,  
-          })
+          .delete(
+            `https://hotel-booking-server-one-xi.vercel.app/room-cancel/${id}`,
+            { withCredentials: true }
+          )
           .then(() => {
             Swal.fire({
               title: "Deleted!",
               text: "Your room booking has been deleted.",
               icon: "success",
             });
-            const remainingRooms = rooms.filter((room) => room._id !== id);
-            setRooms(remainingRooms);
+            setRooms((prev) => prev.filter((r) => r._id !== id));
           })
-          .catch((error) => {
-            console.error("There was an error canceling the room:", error);
-          });
+          .catch((error) => console.error("Error canceling the room:", error));
       }
     });
   };
-
   return (
     <div className="overflow-x-auto p-5">
       <Helmet>
         <title>My-booking | Hotel Booking</title>
       </Helmet>
+
       <h2 className="text-3xl font-semibold mb-5">
         My Booking Rooms Available: {rooms.length}
       </h2>
@@ -170,26 +175,15 @@ const MyBookingsRoom = () => {
           </tbody>
         </table>
       )}
-
-      {isOpenModal && (
+      {isOpenModal && room && (
         <dialog id="my_modal_5" className="modal modal-open">
           <div className="modal-box">
             <h3 className="font-bold text-lg text-center">Booking Summary</h3>
-            <p>
-              <strong>Room Name:</strong> {room.room_name}
-            </p>
-            <p>
-              <strong>Price Per Night:</strong> {room.price_per_night}$
-            </p>
-            <p>
-              <strong>Room Type:</strong> {room.room_type}
-            </p>
-            <p>
-              <strong>Date:</strong> {format(new Date(room.date), "MMM dd, yyyy")}
-            </p>
-            <p>
-              <strong>Description:</strong> {room.room_description}
-            </p>
+            <p><strong>Room Name:</strong> {room.room_name}</p>
+            <p><strong>Price Per Night:</strong> {room.price_per_night}$</p>
+            <p><strong>Room Type:</strong> {room.room_type}</p>
+            <p><strong>Date:</strong> {format(new Date(room.date), "MMM dd, yyyy")}</p>
+            <p><strong>Description:</strong> {room.room_description}</p>
             <p><strong>Amenities:</strong></p>
             <ul>
               {room.available_amenities?.map((amenity, index) => (
@@ -198,9 +192,7 @@ const MyBookingsRoom = () => {
             </ul>
 
             <div>
-              <label>
-                <strong>Select Booking Date:</strong>
-              </label>
+              <label><strong>Select Booking Date:</strong></label>
               <DatePicker
                 selected={selectedDate}
                 onChange={handleDateChange}
@@ -210,9 +202,7 @@ const MyBookingsRoom = () => {
             </div>
 
             <div className="modal-action">
-              <button className="btn" onClick={handleCloseModal}>
-                Close
-              </button>
+              <button className="btn" onClick={handleCloseModal}>Close</button>
               <button className="btn btn-primary" onClick={handleUpdated}>
                 Confirm Booking
               </button>

@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
-const RoomsCard = ({ room }) => {
+import { Room } from "../Types/room";
+interface RoomsCardProps {
+  room: Room;
+}
+const RoomsCard: React.FC<RoomsCardProps> = ({ room }) => {
   const {
     _id,
     room_name,
@@ -16,10 +19,10 @@ const RoomsCard = ({ room }) => {
     <Link to={`/room/${_id}`}>
       <div className="card bg-base-100 w-96 shadow-xl">
         <figure>
-          <img 
-            src={photo} 
-            alt={room_name} 
-            className="w-full h-56 object-cover" 
+          <img
+            src={photo}
+            alt={room_name}
+            className="w-full h-56 object-cover"
           />
         </figure>
         <div className="card-body">
@@ -30,7 +33,7 @@ const RoomsCard = ({ room }) => {
           <p>{room_description}</p>
           <div className="card-actions justify-between">
             <div className="badge badge-outline">
-              Reviews: {review ? review : 0}
+              Reviews: {review ?? 0}
             </div>
             <div className="badge badge-outline">Price: ${price_per_night}</div>
           </div>

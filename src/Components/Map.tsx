@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { Map, Marker } from "pigeon-maps";
 
-// Coordinates of "Landon Top 1 Hotel" (replace with actual coordinates)
-const hotelCoordinates = [51.5074, -0.1278]; // Example coordinates (London)
-const hotelAddress = "Landon Top 1 Hotel, 123 King Street, London, UK"; // Hotel address
+const hotelCoordinates: [number, number] = [51.5074, -0.1278];
+const hotelAddress = "Landon Top 1 Hotel, 123 King Street, London, UK";
 
-const MapHome = () => {
-  const [showInfo, setShowInfo] = useState(false);
 
-  const toggleInfo = () => setShowInfo(!showInfo);
+const MapHome: React.FC = () => {
+  const [showInfo, setShowInfo] = useState<boolean>(false);
+
+  const toggleInfo = (): void => setShowInfo(!showInfo);
 
   return (
-    <div className='my-8 w-11/12 mx-auto'>
+    <div className="my-8 w-11/12 mx-auto">
       <h2 className="text-center text-xl font-semibold">Our Hotel Location</h2>
       <p className="text-center mb-4">{hotelAddress}</p>
 
