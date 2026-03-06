@@ -9,7 +9,6 @@ import Rooms from '../Pages/Rooms';
 import MyBookingsRoom from '../Pages/MyBookingsRoom';
 import PrivateRoute from '../Private/PrivateRoute';
 import RoomsDetails from '../Pages/RoomsDetails';
-import UpdateRoom from '../Components/UpdateRoom';
 
   const Router = createBrowserRouter([
     {
@@ -37,11 +36,6 @@ import UpdateRoom from '../Components/UpdateRoom';
             path:"/room/:id",
             element:<RoomsDetails></RoomsDetails>,
             loader: ({params})=>fetch(`https://hotel-booking-server-one-xi.vercel.app/rooms/${params.id}`),
-        },
-        {
-            path:"/update-room/:id",
-            element:<UpdateRoom></UpdateRoom>,
-            // loader: ({params})=>fetch(`https://hotel-booking-server-one-xi.vercel.app/rooms/my-booked-room/${params.id}`),
         },
         {
             path:"/my-booking-room",
