@@ -7,6 +7,7 @@ import {
   signInWithEmailAndPassword,
   signInWithPopup,
   signOut,
+  updateProfile,
   User,
   UserCredential,
 } from 'firebase/auth';
@@ -15,7 +16,7 @@ import axios from 'axios';
 interface AuthContextType {
   handleGoogleLogin: () => Promise<UserCredential>;
   handleSignIn: (email: string, password: string) => Promise<UserCredential>;
-  handleRegister: (email: string, password: string) => Promise<UserCredential>;
+  handleRegister: (email: string, password: string, name: string, photo: string) => Promise<UserCredential>;
   handleLogout: () => Promise<void>;
   user: User | null;
   loader: boolean;
@@ -29,7 +30,7 @@ export const authContext = createContext<AuthContextType | null>(null);
 
 const AuthProvider = ({ routes }: AuthProviderProps) => {
   const provider = new GoogleAuthProvider();
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser]   = useState<User | null>(null);
   const [loader, setLoader] = useState<boolean>(true);
 
   const handleGoogleLogin = (): Promise<UserCredential> => {
@@ -41,10 +42,20 @@ const AuthProvider = ({ routes }: AuthProviderProps) => {
     setLoader(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
-
-  const handleRegister = (email: string, password: string): Promise<UserCredential> => {
+  const handleRegister = (
+    email: string,
+    password: string,
+    name: string,
+    photo: string
+  ): Promise<UserCredential> => {
     setLoader(true);
-    return createUserWithEmailAndPassword(auth, email, password);
+    return createUserWithEmailAndPassword(auth, email, password).then((result) => {
+      updateProfile(result.user, {
+        displayName: name,
+        photoURL: photo,
+      });
+      return result;
+    });
   };
 
   const handleLogout = (): Promise<void> => {
@@ -90,9 +101,7 @@ const AuthProvider = ({ routes }: AuthProviderProps) => {
       setLoader(false);
     });
 
-    return () => {
-      unsubscribe();
-    };
+    return () => unsubscribe();
   }, []);
 
   return (
