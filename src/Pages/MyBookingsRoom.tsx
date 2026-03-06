@@ -89,14 +89,10 @@ const MyBookingsRoom: React.FC = () => {
       style={{ background: "linear-gradient(135deg, #0a0a1a 0%, #0f0f2e 50%, #0a1628 100%)" }}
     >
       <Helmet><title>My Bookings | Hotel Booking</title></Helmet>
-
-      {/* Background blobs */}
       <div className="absolute top-20 left-10 w-96 h-96 bg-indigo-600/10 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-20 right-10 w-80 h-80 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-6xl mx-auto relative z-10">
-
-        {/* Header */}
         <div className="mb-12">
           <span className="text-xs font-semibold tracking-widest uppercase text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 px-4 py-1.5 rounded-full">
             My Bookings
@@ -111,8 +107,6 @@ const MyBookingsRoom: React.FC = () => {
             {loading ? "Loading..." : `${rooms.length} booking${rooms.length !== 1 ? "s" : ""} found`}
           </p>
         </div>
-
-        {/* Loading Skeleton */}
         {loading && (
           <div className="flex flex-col gap-4">
             {[...Array(3)].map((_, i) => (
@@ -130,8 +124,6 @@ const MyBookingsRoom: React.FC = () => {
             ))}
           </div>
         )}
-
-        {/* Empty */}
         {!loading && rooms.length === 0 && (
           <div
             className="flex flex-col items-center justify-center py-24 gap-4 rounded-2xl border border-white/10 backdrop-blur-sm"
@@ -142,8 +134,6 @@ const MyBookingsRoom: React.FC = () => {
             <p className="text-gray-600 text-sm">Start exploring rooms and make your first booking!</p>
           </div>
         )}
-
-        {/* Rooms List */}
         {!loading && rooms.length > 0 && (
           <div className="flex flex-col gap-4">
             {rooms.map((room, i) => (
@@ -152,19 +142,14 @@ const MyBookingsRoom: React.FC = () => {
                 className="group flex flex-col sm:flex-row items-start sm:items-center gap-5 rounded-2xl border border-white/10 p-4 hover:border-indigo-500/30 hover:bg-indigo-500/5 transition-all duration-300"
                 style={{ background: "rgba(255,255,255,0.04)" }}
               >
-                {/* Index */}
                 <span className="hidden sm:flex w-8 h-8 rounded-full bg-white/5 border border-white/10 items-center justify-center text-xs text-gray-500 flex-shrink-0">
                   {i + 1}
                 </span>
-
-                {/* Image */}
                 <img
                   src={room.photo}
                   alt={room.room_name}
                   className="w-full sm:w-28 h-40 sm:h-20 object-cover rounded-xl flex-shrink-0"
                 />
-
-                {/* Info */}
                 <div className="flex-1 flex flex-col gap-1 min-w-0">
                   <h3 className="text-white font-semibold text-base truncate group-hover:text-indigo-300 transition-colors duration-300">
                     {room.room_name}
@@ -177,8 +162,6 @@ const MyBookingsRoom: React.FC = () => {
                     <span className="text-indigo-400 font-semibold">${room.price_per_night}<span className="text-gray-600 font-normal"> / night</span></span>
                   </div>
                 </div>
-
-                {/* Actions */}
                 <div className="flex items-center gap-2 flex-shrink-0 w-full sm:w-auto">
                   <button
                     onClick={() => handleOpenModal(room)}
@@ -198,15 +181,12 @@ const MyBookingsRoom: React.FC = () => {
           </div>
         )}
       </div>
-
-      {/* ── Update Modal ── */}
       {isOpenModal && room && (
         <div className="fixed inset-0 z-50 flex items-center justify-center px-4" style={{ background: "rgba(0,0,0,0.75)" }}>
           <div
             className="w-full max-w-md rounded-3xl border border-white/10 backdrop-blur-xl p-8 flex flex-col gap-6 shadow-2xl shadow-black/60"
             style={{ background: "rgba(15,15,40,0.96)" }}
           >
-            {/* Header */}
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-xs font-semibold tracking-widest uppercase text-indigo-400">Update Booking</p>
@@ -216,8 +196,6 @@ const MyBookingsRoom: React.FC = () => {
             </div>
 
             <div className="h-px bg-white/10" />
-
-            {/* Details */}
             <div className="flex flex-col gap-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-400">Room Type</span>
@@ -232,11 +210,7 @@ const MyBookingsRoom: React.FC = () => {
                 <span className="text-gray-200">{format(new Date(room.date), "MMM dd, yyyy")}</span>
               </div>
             </div>
-
-            {/* Description */}
             <p className="text-sm text-gray-300 leading-relaxed">{room.room_description}</p>
-
-            {/* Amenities */}
             {room.available_amenities && room.available_amenities.length > 0 && (
               <div>
                 <p className="text-xs font-semibold tracking-widest uppercase text-indigo-400 mb-2">Amenities</p>
@@ -249,8 +223,6 @@ const MyBookingsRoom: React.FC = () => {
                 </div>
               </div>
             )}
-
-            {/* Date Picker */}
             <div>
               <p className="text-xs font-semibold tracking-widest uppercase text-indigo-400 mb-2">New Date</p>
               <DatePicker
@@ -262,8 +234,6 @@ const MyBookingsRoom: React.FC = () => {
                 minDate={new Date()}
               />
             </div>
-
-            {/* Actions */}
             <div className="flex gap-3 pt-2">
               <button
                 onClick={handleCloseModal}
