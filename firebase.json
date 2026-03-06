@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "hotel-booking-platform-b1fc3",
     "public": "dist",
     "ignore": [
       "firebase.json",
